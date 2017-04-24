@@ -1,4 +1,4 @@
-package multiThreading.seance3et4;
+package multiThreading.seance3et4.client;
 
 import multiThreading.seance3et4.operation.Addition;
 
@@ -10,22 +10,21 @@ import java.net.Socket;
 /*................................................................................................................................
  . Copyright (c)
  .
- . The Client	 Class was Coded by : Alexandre BOLOT
+ . The ClientTCP	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 11/04/17 23:51
+ . Last Modified : 24/04/17 09:45
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
 
-public class Client
+public class ClientTCP extends Client
 {
     public static void main (String[] args)
     {
         Socket socket;
         try
         {
-            //145
-            socket = new Socket("192.168.43.243", 2009);
+            socket = new Socket("192.168.43.145", 2009);
             System.out.println("Demande de connexion");
             
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());

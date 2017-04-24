@@ -1,11 +1,14 @@
 package multiThreading.seance3et4;
 
+import multiThreading.seance3et4.client.ClientTCP;
+import multiThreading.seance3et4.server.ServerTCP;
+
 /*................................................................................................................................
  . Copyright (c)
  .
  . The App	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 11/04/17 23:51
+ . Last Modified : 24/04/17 09:14
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
@@ -19,7 +22,7 @@ public class App
             @Override
             public void run ()
             {
-                Serveur.main(null);
+                ServerTCP.main(null);
             }
         };
         
@@ -28,7 +31,7 @@ public class App
             @Override
             public void run ()
             {
-                Client.main(null);
+                ClientTCP.main(null);
             }
         };
         

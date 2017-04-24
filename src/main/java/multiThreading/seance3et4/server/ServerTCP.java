@@ -1,4 +1,4 @@
-package multiThreading.seance3et4;
+package multiThreading.seance3et4.server;
 
 import multiThreading.seance3et4.operation.Operation;
 
@@ -11,14 +11,14 @@ import java.net.Socket;
 /*................................................................................................................................
  . Copyright (c)
  .
- . The Serveur	 Class was Coded by : Alexandre BOLOT
+ . The ServerTCP	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 11/04/17 23:51
+ . Last Modified : 24/04/17 08:59
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
 
-public class Serveur
+public class ServerTCP extends Server
 {
     public static void main (String[] args)
     {
@@ -30,7 +30,7 @@ public class Serveur
             
             while (true)
             {
-                System.out.println("Serveur ouvert, prêt à recevoir des Clients");
+                System.out.println("Server ouvert, prêt à recevoir des Clients");
                 final Socket s = socketserver.accept();
                 System.out.println("Un Client s'est connecté !");
                 
