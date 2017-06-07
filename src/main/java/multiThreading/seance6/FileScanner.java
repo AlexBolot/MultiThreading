@@ -8,7 +8,7 @@ import java.util.concurrent.ArrayBlockingQueue;
  .
  . The FileScanner	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 07/06/17 11:59
+ . Last Modified : 07/06/17 12:05
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
@@ -16,8 +16,9 @@ import java.util.concurrent.ArrayBlockingQueue;
 @SuppressWarnings({"InfiniteLoopStatement", "ConstantConditions"})
 public class FileScanner
 {
-    private final static String TXT = "txt";
-    private final static String PNG = "png";
+    private final static String TXT      = "txt";
+    private final static String PNG      = "png";
+    private final static String FilePath = "src/main/resources/ToRead/";
     
     public static void main (String argv[])
     {
@@ -29,7 +30,7 @@ public class FileScanner
             @Override
             public void run ()
             {
-                File folder = new File("/Users/alexandre/Desktop/ToRead/");
+                File folder = new File(FilePath);
                 
                 for (File file : folder.listFiles())
                 {
@@ -46,7 +47,7 @@ public class FileScanner
             @Override
             public void run ()
             {
-                File folder = new File("/Users/alexandre/Desktop/ToRead/");
+                File folder = new File(FilePath);
                 
                 for (File file : folder.listFiles())
                 {
