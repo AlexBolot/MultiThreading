@@ -1,11 +1,9 @@
 package multiThreading.seance5.server;
 
-import multiThreading.seance3et4.operation.Operation;
-
 import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.SocketAddress;
+import java.net.InetAddress;
 import java.util.ArrayList;
 
 /*................................................................................................................................
@@ -13,7 +11,7 @@ import java.util.ArrayList;
  .
  . The ServerUDP	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 22/05/17 09:47
+ . Last Modified : 07/06/17 09:17
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
@@ -21,23 +19,23 @@ import java.util.ArrayList;
 @SuppressWarnings("InfiniteLoopStatement")
 public class ServerUDP extends Server
 {
-    public final static  int                      port     = 8532;
-    private final static int                      taille   = 1024;
-    private final static byte                     buffer[] = new byte[taille];
-    private static       ArrayList<SocketAddress> clients  = new ArrayList<>();
+    public final static  int                    port     = 8532;
+    private final static int                    taille   = 1024;
+    private final static byte                   buffer[] = new byte[taille];
+    private static       ArrayList<InetAddress> clients  = new ArrayList<>();
     
     public static void main (String argv[])
     {
         try
         {
             DatagramSocket socket = new DatagramSocket(port);
-            clients.add(socket.getRemoteSocketAddress());
             
             System.out.println("waiting for clients");
             while (true)
             {
                 DatagramPacket data = new DatagramPacket(buffer, buffer.length);
                 socket.receive(data);
+                if(!clients.contains(data.getAddress())) clients.add(data.getAddress());
                 
                 ByteArrayInputStream bis = new ByteArrayInputStream(data.getData());
                 ObjectInput in = new ObjectInputStream(bis);
@@ -46,19 +44,35 @@ public class ServerUDP extends Server
                 
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 ObjectOutput out = new ObjectOutputStream(bos);
+                out.writeObject(o);
                 
-                out.writeObject(((Operation) o).compute());
                 out.flush();
-                data.setData(bos.toByteArray());
-                
-                System.out.println(o);
-                System.out.println(data.getAddress());
-                socket.send(data);
+                sendBroadCast(bos.toByteArray());
             }
         }
         catch (IOException | ClassNotFoundException e)
         {
             e.printStackTrace();
+        }
+    }
+    
+    private static void sendBroadCast (byte[] bytes)
+    {
+        for (InetAddress inetAddress : clients)
+        {
+            try
+            {
+                DatagramPacket dataSent = new DatagramPacket(bytes, bytes.length, inetAddress, port);
+                DatagramSocket socket = new DatagramSocket();
+                
+                socket.send(dataSent);
+                System.out.println("sent :" + dataSent.toString());
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+                System.out.println(inetAddress);
+            }
         }
     }
 }
